@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
+use Auth;
+
+class LoginController extends Controller
+{
+    public function login()
+    {
+        $credentials = $this->validate(request(), [
+            'email' => 'email|required|string',
+            'password' => 'required|string'
+        ]);
+            
+        if(Auth::attempt($credentials))
+        {
+            return 'tu sesión ha iniciado correctmente';
+        }
+
+        return 'error en la autenticación';
+     }
+
+     public function logout(Request $request) {
+        Auth::logout();
+        return redirect('/login');
+      }
+
+      public function showLoginForm()
+{
+    return view('mylogg');
+}
+}
